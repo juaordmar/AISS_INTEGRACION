@@ -1,7 +1,9 @@
 package aiss.api.resources;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -10,6 +12,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
@@ -48,9 +51,17 @@ public class PedidoResource {
 
 	@GET
 	@Produces("application/json")
-	public Collection<Pedido> getAll()
+	public Collection<Pedido> getAll(@QueryParam("isEmpty") Boolean isEmpty)
 	{
-		return repository.getAllPedidos();
+		List<Pedido> result = new ArrayList<Pedido>();
+		for(Pedido pedido: repository.getAllPedidos()) {
+			if(isEmpty == null //Filtro vacío de pedido
+					|| (isEmpty && (pedido.getLineasPedido() == null || pedido.getLineasPedido().size() == 0))
+					|| (!isEmpty && (pedido.getLineasPedido() != null && pedido.getLineasPedido().size() > 0))){
+				result.add(pedido);
+			}
+		}
+		return result;
 	}
 	
 	

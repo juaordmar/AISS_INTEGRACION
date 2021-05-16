@@ -37,7 +37,7 @@ import java.util.List;
 
 
 
-@Path("/songs")
+@Path("/lineaPedidos")
 public class LineaPedidoResource {
 
 	public static LineaPedidoResource _instance=null;

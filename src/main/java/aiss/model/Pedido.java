@@ -83,10 +83,6 @@ public class Pedido {
 			lineasPedido.remove(lp);
 	}
 
-	public void setDescription(String string) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	
 	
