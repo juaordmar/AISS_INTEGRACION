@@ -55,7 +55,7 @@ public class PedidoResource {
 	{
 		List<Pedido> result = new ArrayList<Pedido>();
 		for(Pedido pedido: repository.getAllPedidos()) {
-			if(isEmpty == null //Filtro vacÌo de pedido
+			if(isEmpty == null //Empty playlist filter
 					|| (isEmpty && (pedido.getLineasPedido() == null || pedido.getLineasPedido().size() == 0))
 					|| (!isEmpty && (pedido.getLineasPedido() != null && pedido.getLineasPedido().size() > 0))){
 				result.add(pedido);
@@ -86,9 +86,6 @@ public class PedidoResource {
 		if (pedido.getId() == null || "".equals(pedido.getId()))
 			throw new BadRequestException("La id del pedido no puede estar vac√≠a");
 		
-		if (pedido.getLineasPedido()!=null)
-			throw new BadRequestException("");
-
 		repository.addPedido(pedido);
 
 		// Builds the response. Returns the playlist the has just been added.
@@ -108,8 +105,8 @@ public class PedidoResource {
 			throw new NotFoundException("El pedido con id="+ pedido.getId() +" no fue encontrado");			
 		}
 		
-		if (pedido.getLineasPedido()!=null)
-			throw new BadRequestException("");
+//		if (pedido.getLineasPedido()!=null)
+//			throw new BadRequestException("");
 		
 		// Update id
 		if (pedido.getId()!=null)
@@ -119,6 +116,9 @@ public class PedidoResource {
 		if (pedido.getNombreCliente()!=null)
 			pedidoantiguo.setNombreCliente(pedido.getNombreCliente());
 		
+		//Update precioTotal
+		if(pedido.getPrecioPedido()!=null)
+			pedidoantiguo.setPrecioPedido(pedido.getPrecioPedido());
 		
 		return Response.noContent().build();
 	}

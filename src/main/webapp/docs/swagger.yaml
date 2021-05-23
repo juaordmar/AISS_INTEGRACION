@@ -1,0 +1,432 @@
+openapi: 3.0.0
+servers: 
+  - url: https://proyecto-implementacion-aiss.ew.r.appspot.com
+info:
+  description: Api creada para poder administrar de una manera fácil e intuitiva los pedidos que se encarguen.
+  version: 1.0.0
+  title: JJLE Pedidos
+  contact:
+    email: you@your-company.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: lineaPedidos
+    description: lineaPedidos
+  - name: pedido
+    description: Pedidos
+paths:
+  /api/lineaPedidos:
+    get:
+      tags:
+        - lineaPedidos
+      summary: Get lineas de Pedidos
+      description: Get all lineas de Pedidos
+      operationId: getLineaPedidos
+      parameters:
+        - name: order
+          in: query
+          description: Order results by nombre del producto, precio unitario or cantidad
+          required: false
+          schema:
+            type: string
+            enum:
+              - nombreProducto
+              - '-nombreProducto'
+              - precioUnitario
+              - '-precioUnitario'
+              - cantidad
+              - '-cantidad'
+        - name: q
+          in: query
+          description: Query to filter
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description:  Maximum number of results
+          required: false
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+        - name: offset
+          in: query
+          description: Offset of the results
+          required: false
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+      responses:
+        '200':
+          description: Search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - nombreProducto
+                  properties:
+                    id:
+                      type: string
+                    nombreProducto:
+                      type: string
+                    precioUnitario:
+                      type: number
+                    cantidad:
+                      type: integer
+                  example:
+                    id: lp1
+                    nombreProducto: Platanos Ordoñex
+                    precioUnitario: '1.02'
+                    cantidad: '7'
+        '400':
+          description: Bad request
+    post:
+      tags:
+        - lineaPedidos
+      summary: Create a lineaPedidos
+      description: Create a lineaPedidos
+      operationId: createLineaPedidos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - nombreProducto
+              properties:
+                id:
+                  type: string
+                nombreProducto:
+                  type: string
+                precioUnitario:
+                  type: number
+                cantidad:
+                  type: integer
+              example:
+                id: lp1
+                nombreProducto: Platanos Ordoñex
+                precioUnitario: '1.02'
+                cantidad: '7'
+        description: Linea de Pedido to create
+        required: true
+      responses:
+        '201':
+          description: Linea de Pedido created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - nombreProducto
+                properties:
+                  id:
+                    type: string
+                  nombreProducto:
+                    type: string
+                  precioUnitario:
+                    type: number
+                  cantidad:
+                    type: integer
+                example:
+                  id: lp1
+                  nombreProducto: Platanos Ordoñex
+                  precioUnitario: '1.02'
+                  cantidad: '7'
+        '400':
+          description: Bad request
+  '/api/lineaPedidos/{id}':
+    delete:
+      tags:
+        - lineaPedidos
+      summary: Delete linea de pedidos
+      description: Delete linea de pedidos
+      operationId: deleteLineaPedidos
+      parameters:
+        - name: id
+          in: path
+          description: Id of the linea de pedidos
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Linea de pedidos deleted
+        '404':
+          description: Linea de pedidos not found
+  /api/pedidos:
+    get:
+      tags:
+        - pedidos
+      summary: Get pedidos
+      description: Get all pedidos
+      operationId: getPedidos
+      parameters:
+        - name: order
+          in: query
+          description: Order results by nombre del cliente
+          required: false
+          schema:
+            type: string
+            enum:
+              - nombreCliente
+              - '-nombreCliente'
+        - name: isEmpty
+          in: query
+          description: Filter pedidos with no linea de pedidos
+          required: false
+          schema:
+            type: boolean
+        - name: name
+          in: query
+          description: Filter pedidos by nombre del cliente
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - nombreCliente
+                  properties:
+                    id:
+                      type: string
+                    nombreCliente:
+                      type: string
+                    precioPedido:
+                      type: number
+                    lineaPedidos:
+                      type: array
+                      items:
+                        type: object
+                        required:
+                          - nombreProducto
+                        properties:
+                          id:
+                            type: string
+                          nombreProducto:
+                            type: string
+                          precioUnitario:
+                            type: number
+                          cantidad:
+                            type: integer
+                  example:
+                    id: p5
+                    nombreCliente: Jason Derulo
+                    precioPedido: '25'
+                    lineaPedidos:
+                      - id: lp4
+                        nombreProducto: Platanos Ordoñex
+                        precioUnitario: '0.25'
+                        cantidad: '100'
+        '400':
+          description: Bad request
+    put:
+      tags:
+        - pedidos
+      summary: Update a pedido
+      description: Update a pedido
+      operationId: updatePedido
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - nombreCliente
+              properties:
+                id:
+                  type: string
+                nombreCliente:
+                  type: string
+                precioPedido:
+                  type: number
+                lineaPedidos:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - nombreProducto
+                    properties:
+                      id:
+                        type: string
+                      nombreProducto:
+                        type: string
+                      precioUnitario:
+                        type: number
+                      cantidad:
+                        type: integer
+              example:
+                id: p5
+                nombreCliente: Jason Derulo
+                precioPedido: '25.25'
+                lineaPedidos:
+                  - id: lp4
+                    nombreProducto: Platanos Ordoñex
+                    precioUnitario: '0.25'
+                    cantidad: '101'
+        description: Pedido to update
+      responses:
+        '204':
+          description: Pediddo updated
+        '400':
+          description: Bad request
+        '404':
+          description: Pedido not found
+  '/api/pedidos/{id}':
+    get:
+      tags:
+        - pedidos
+      summary: Get a pedido
+      description: Get a pedido
+      operationId: getPedido
+      parameters:
+        - name: id
+          in: path
+          description: Id of the pedido
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Pedido found
+          content:
+            application/json:
+              schema:
+                required:
+                  - nombreCliente
+                properties:
+                  id:
+                    type: string
+                  nombreCliente:
+                    type: string
+                  precioPedido:
+                    type: number
+                  lineaPedidos:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - nombreProducto
+                      properties:
+                        id:
+                          type: string
+                        nombreProducto:
+                          type: string
+                        precioUnitario:
+                          type: number
+                        cantidad:
+                          type: integer
+                example:
+                  id: p5
+                  nombreCliente: Jason Derulo
+                  precioPedido: '25'
+                  lineaPedidos:
+                    - id: lp4
+                      nombreProducto: Platanos Ordoñex
+                      precioUnitario: '0.25'
+                      cantidad: '100'
+        '404':
+          description: Pedido not found
+  '/api/pedidos/{pedidoId}/{lineaPedidoId}':
+    post:
+      tags:
+        - pedidos
+      summary: Add linea de pedido to pedido
+      description: Add song to pedido
+      operationId: addLineaPedidoToPedido
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+      parameters:
+        - name: pedidoId
+          in: path
+          description: Id of the pedido
+          required: true
+          schema:
+            type: string
+        - name: lineaPedidoId
+          in: path
+          description: Id of the linea de pedido
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Linea de pedido added to pedido
+          content:
+            application/json:
+              schema:
+                required:
+                  - nombreCliente
+                properties:
+                  id:
+                    type: string
+                  nombreCliente:
+                    type: string
+                  precioPedido:
+                    type: number
+                  lineaPedidos:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - nombreProducto
+                      properties:
+                        id:
+                          type: string
+                        nombreProducto:
+                          type: string
+                        precioUnitario:
+                          type: number
+                        cantidad:
+                          type: integer
+                example:
+                  id: p5
+                  nombreCliente: Jason Derulo
+                  precioPedido: '25'
+                  lineaPedidos:
+                    - id: lp4
+                      nombreProducto: Platanos Ordoñex
+                      precioUnitario: '0.25'
+                      cantidad: '100'
+        '400':
+          description: Bad request
+        '404':
+          description: Pedido or linea de pedido not found
+    delete:
+      tags:
+        - pedidos
+      summary: Delete linea de pedido from pedido
+      description: Delete linea de pedido from pedido
+      operationId: deleteLineaPedidoFromPedido
+      parameters:
+        - name: pedidoId
+          in: path
+          description: Id of the pedido
+          required: true
+          schema:
+            type: string
+        - name: lineaPedidoId
+          in: path
+          description: Id of the linea de pedido
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Linea de pedido deleted from pedido
+        '404':
+          description: Pedido or linea de pedido not found

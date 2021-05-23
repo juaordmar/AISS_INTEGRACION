@@ -12,7 +12,8 @@ public class MapPedidoRepository implements PedidoRepository {
 	Map<String, Pedido> pedidoMap;
 	Map<String, LineaPedido> lineaPedidoMap;
 	private static MapPedidoRepository instance=null;
-	private int index=0;			
+	private int indexLp=1;
+	private int indexP=1;
 	
 	
 	public static MapPedidoRepository getInstance() {
@@ -81,7 +82,7 @@ public class MapPedidoRepository implements PedidoRepository {
 	// Playlist related operations
 	@Override
 	public void addPedido(Pedido p) {
-		String id = "p" + index++;	
+		String id = "p" + indexP++;	
 		p.setId(id);
 		pedidoMap.put(id,p);
 	}
@@ -127,7 +128,7 @@ public class MapPedidoRepository implements PedidoRepository {
 	
 	@Override
 	public void addLineaPedido(LineaPedido lp) {
-		String id = "lp" + index++;
+		String id = "lp" + indexLp++;
 		lp.setId(id);
 		lineaPedidoMap.put(id, lp);
 	}

@@ -10,7 +10,6 @@ public class Pedido {
 	private String id;
 	private String nombreCliente;
 	private Integer precioPedido;
-	//private LocalDate fechaPedido;
 	private List<LineaPedido> lineasPedido;
 	
 	

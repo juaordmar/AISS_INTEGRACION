@@ -61,8 +61,8 @@ public class LineaPedidoResource {
 	{
 		List<LineaPedido> result = new ArrayList<LineaPedido>();
 		for(LineaPedido LineaPedido: repository.getAllLineaPedidos()) {
-			if((q == null || LineaPedido.getNombreProducto().contains(q) ||
-					LineaPedido.getPrecioUnitario()==Integer.parseInt(q)) && (limit == null || result.size()<limit)) {
+			if((q == null || LineaPedido.getNombreProducto().contains(q))
+					 && (limit == null || result.size()<limit)) {
 					result.add(LineaPedido);
 				}
 			}
