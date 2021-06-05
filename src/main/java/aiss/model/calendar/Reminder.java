@@ -6,6 +6,7 @@ import javax.annotation.Generated;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -19,7 +20,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 	"description"
 })
 
-public class ReminderResource {
+@JsonIgnoreProperties(ignoreUnknown=true)
+public class Reminder {
 
 	@JsonProperty("id")
 	private String id;

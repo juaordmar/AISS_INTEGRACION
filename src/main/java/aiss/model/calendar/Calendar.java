@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 	"reminders"
 })
 
-public class CalendarResource {
+public class Calendar {
 
 	@JsonProperty("user")
 	private String user;
