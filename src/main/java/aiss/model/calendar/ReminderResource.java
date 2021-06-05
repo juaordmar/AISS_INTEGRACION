@@ -18,8 +18,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 	"title",
 	"description"
 })
-@Generated("jsonschema2pojo")
-public class ReminderSearch {
+
+public class ReminderResource {
 
 	@JsonProperty("id")
 	private String id;
