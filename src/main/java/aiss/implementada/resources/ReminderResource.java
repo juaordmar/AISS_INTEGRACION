@@ -34,7 +34,7 @@ public class ReminderResource {
         ClientResource cr = null;
         boolean success = true;
         try {
-            cr = new ClientResource(uri + "/" + r.getId());
+            cr = new ClientResource(uri);
             cr.setEntityBuffering(true); // Needed for using RESTlet from JUnit tests
             cr.put(r);
 
@@ -76,5 +76,22 @@ public class ReminderResource {
 
         return Arrays.asList(reminders);
     }
+	
+	public boolean deleteReminder(Reminder r) {
+		ClientResource cr = null;
+		boolean success = true;
+		try {
+			cr = new ClientResource(uri + "/" + r.getId());
+			cr.setEntityBuffering(true); // Needed for using RESTlet from JUnit tests
+			cr.delete();
+
+		} catch (ResourceException re) {
+			System.err.println("Error when deleting the reminder: " + cr.getResponse().getStatus());
+			success = false;
+			throw re;
+		}
+		return success;
+	}
+
 	
 }
