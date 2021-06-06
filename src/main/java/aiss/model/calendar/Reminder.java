@@ -96,4 +96,10 @@ public class Reminder {
 		this.additionalProperties.put(name, value);
 	}
 
+//	public Reminder(String id, String title) {
+//		super();
+//		this.id = id;
+//		this.title = title;
+//	}
+		
 }
