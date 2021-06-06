@@ -19,14 +19,29 @@ public class ReminderTests {
 		List<Reminder> reminders = reminderR.getReminders();
 
 		assertNotNull("The search returned null", reminders);
-		assertFalse("The number of albums of reminders is zero", reminders.size()==0);
+		assertFalse("The number of reminders is zero", reminders.size()==0);
 
 		System.out.println("The search for reminders returned " + reminders.size() + " reminders.");
 
-		//Print movies data
 		for(Reminder reminder : reminders) {
 			System.out.println("Reminder title: " + reminder.getTitle());
 		}
+
+	}
+	
+	@Test
+	public void getReminderTest() throws UnsupportedEncodingException {
+		ReminderResource reminderR = new ReminderResource();
+		Reminder reminder = reminderR.getReminder("8");
+
+		assertNotNull("The search returned null", reminder);
+		//assertFalse("The number of reminders is zero", reminders.size()==0);
+
+		//System.out.println("The search for reminders returned " + reminders.size() + " reminders.");
+
+		//for(Reminder reminder : reminders) {
+		System.out.println("Reminder title: " + reminder.getTitle());
+		//}
 
 	}
 
